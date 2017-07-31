@@ -18,6 +18,7 @@ public class BinPacking {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        // test git
         
         TabItem tabItemTest = new TabItem();
         tabItemTest.randomize(10,3,3,3);
