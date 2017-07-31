@@ -23,21 +23,24 @@ public class Conteneur {
     
     private int tailleX;
     private int tailleY;
-    private int[][][] conteneur;
+    private int tailleZ;
+    private int[][][][] conteneur;
     
     public Conteneur(){
         
         tailleX = 1;
         tailleY = 1;
-        conteneur = new int[tailleX][tailleY][2];
+        tailleZ = 1;
+        conteneur = new int[tailleX][tailleY][tailleZ][2];
         
     }
     
-    public Conteneur(int _x, int _y){
+    public Conteneur(int _x, int _y, int _z){
         
         tailleX = _x;
         tailleY = _y;
-        conteneur = new int[tailleX][tailleY][2];
+        tailleZ = _z;
+        conteneur = new int[tailleX][tailleY][tailleZ][2];
         
     }
     
@@ -53,35 +56,42 @@ public class Conteneur {
         
     }
     
-    public int getXY(int _x, int _y){
+    public int getTailleZ(){
         
-        return conteneur[_x][_y][0];
+        return tailleZ;
         
     }
     
-    public int getID(int _x, int _y){
+    public int getXYZ(int _x, int _y, int _z){
         
-        return conteneur[_x][_y][1];
+        return conteneur[_x][_y][_z][0];
+        
+    }
+    
+    public int getID(int _x, int _y, int _z){
+        
+        return conteneur[_x][_y][_z][1];
     }
       
     
-    public void setTailleXY(int _x, int _y){
+    public void setTailleXYZ(int _x, int _y, int _z){
         
         tailleX = _x;
         tailleY = _y;
-        conteneur = new int[tailleX][tailleY][2];
+        tailleZ = _z;
+        conteneur = new int[tailleX][tailleY][tailleZ][2];
         
     }
     
-    public void setXY(int _x, int _y, int _val){
+    public void setXYZ(int _x, int _y, int _z, int _val){
         
-        conteneur[_x][_y][0] = _val;
+        conteneur[_x][_y][_z][0] = _val;
         
     }
     
-    public void setID(int _x, int _y, int _ID){
+    public void setID(int _x, int _y, int _z, int _ID){
         
-        conteneur[_x][_y][1] = _ID;
+        conteneur[_x][_y][_z][1] = _ID;
         
     }
 
@@ -92,36 +102,42 @@ public class Conteneur {
         
         for(int i = 0 ; i < tailleX ; i++){
             
-            for(int j = 0 ; j < tailleY ; j++)
+            for(int j = 0 ; j < tailleY ; j++){
                 
-                for(int k = 0 ; k < 2 ; k++){
+                for(int l = 0 ; l < tailleZ ; l++){
                     
-                    if(k==0) conteneur[i][j][k] = -1;
-                    else conteneur[i][j][k] = 0;
+                   for(int k = 0 ; k < 2 ; k++){
+                    
+                        if(k==0) conteneur[i][j][l][k] = -1;
+                        else conteneur[i][j][l][k] = 0;
+                    
+                    } 
                     
                 }
-                
+            
             }
-        
+        }        
     }
     
     
     // permet de cloner un conteneur
     public void clone(Conteneur _source){
         
-        this.setTailleXY(_source.getTailleX(), _source.getTailleY());
+        this.setTailleXYZ(_source.getTailleX(), _source.getTailleY(), _source.getTailleZ());
         for(int i = 0 ; i < this.getTailleX() ; i++){
             
             for(int j = 0 ; j < this.getTailleY() ; j++){
                 
-                this.setXY(i, j, _source.getXY(i,j));
-                this.setID(i, j, _source.getID(i,j));
-                
-            }
-            
-            
-        }
+                for(int k = 0 ; k < this.getTailleZ() ; k++){
+                    
+                    this.setXYZ(i, j, k, _source.getXYZ(i,j,k));
+                    this.setID(i, j, k, _source.getID(i,j,k));
+                    
+                }
         
+            }
+       
+        } 
     }
     
     public void afficherContenu(){
@@ -132,7 +148,13 @@ public class Conteneur {
             
             for(int j = 0 ; j < tailleY ; j++){
                 
-                System.out.println("Conteneur[" + i + "]["+j+"][0] = " + conteneur[i][j][0] + "     [" + i + "]["+j+"][1] = " + conteneur[i][j][1]);
+                for(int k = 0 ; k < tailleZ ; k++){
+                    
+                    System.out.println("Conteneur[" + i + "]["+j+"]["+k+"][0] = " + conteneur[i][j][k][0] + "     [" + i + "]["+j+"]["+k+"][1] = " + conteneur[i][j][k][1]);
+                    
+                }
+                
+                
                 
             }
             
@@ -153,12 +175,16 @@ public class Conteneur {
             
             for(int j = 0 ; j < tailleY ; j++){
                 
-                System.out.print(conteneur[i][j][1]+" ");
+                for(int k = 0 ; k < tailleZ ; k++){
+                    
+                    System.out.print(conteneur[i][j][1]+" ");
+                    
+                }
+                
+                System.out.println();
                 
             }
-            
-            System.out.println();
-            
+
         }
         
         System.out.println("-------------------------------");
@@ -169,18 +195,24 @@ public class Conteneur {
         
          System.out.println("-------------------------------");
         
-        for(int i = 0 ; i < tailleX ; i++){
+         
+         
+        for(int i = 0 ; i < tailleZ ; i++){
             
             
             
-            for(int j = 0 ; j < tailleY ; j++){
+            for(int j = 0 ; j < tailleX ; j++){
                 
-                System.out.print(conteneur[i][j][0]+" ");
+                for(int k = 0 ; k < tailleY ; k++){
+                    
+                    System.out.print(conteneur[j][k][i][0]+" ");
+                    
+                }
+                
+                System.out.println();
                 
             }
-            
-            System.out.println();
-            
+
         }
         
         System.out.println("-------------------------------");
@@ -188,98 +220,157 @@ public class Conteneur {
     }
     
     // permet de séparer un conteneur en plusieurs sous conteneurs ce qui permet d'optimiser le tri ensuite
-    public int split(int maxSplitX, int maxSplitY){
+    public int split(int maxSplitX, int maxSplitY, int maxSplitZ){
         
-        int[] tailleRestante = new int[tailleY];
-        for (int i = 0 ; i < tailleY ; i++){
+        int[][] tailleRestante = new int[tailleX][tailleY];
+        for (int i = 0 ; i < tailleX ; i++){
             
-            tailleRestante[i] = tailleX;
+            for (int j = 0 ; j < tailleY ; j++){
+            
+                tailleRestante[i][j] = tailleZ;
+            
+            
+            }
+            
             
         }
         int id = 1;
-        int compteur = 0;   
-        int indice = 0;
+        int compteurX = 0;
+        int compteurY = 0;
+        int indiceX = 0;
+        int indiceY = 0;
+        boolean pasDePlaceY = true;
         boolean pasDePlace = true;
         int j = 0;
+        int k = 0;
+        int i = 0;
         int maxSplitYOrig = maxSplitY;
+        int compteur;
         
-        if (maxSplitX > this.getTailleX() || maxSplitY > this.getTailleY()){
+        if (maxSplitX > this.getTailleX() || maxSplitY > this.getTailleY() || maxSplitZ > this.getTailleZ()){
             
-            System.out.println("Le plus grand objet de votre liste est plus grand que ce conteneur, veuillez réessayer.");
+            System.out.println("Le plus grand objet de votre liste ne rentre pas dans ce conteneur, veuillez réessayer.");
             return -1;
             
         } else {
             
             do {
                 
-                compteur = 0;
-                indice=0;
+                compteurX = 0;
+                indiceX=0;
                 pasDePlace = true;
+                i=0;
                 
-                for(int i = 0 ; i < tailleY ; i++){
+                while( i < tailleY && pasDePlace == true){
                     
+                    k = 0;
+                    while( k < tailleY && pasDePlaceY == true){
                     
-                    if(tailleRestante[i] >= maxSplitX){
+                                           
+                        if(tailleRestante[i][k] >= maxSplitZ){
+                        compteurY++;
                         
-                        compteur++;
+                        }
+                        else {
+
+                            compteurY = 0;
+                            indiceY = k+1;
+
+                        }
+                        if(compteurY == maxSplitY){
+
+                            pasDePlaceY = false;                                            
+
+                        }
+                        k++;
                         
                     }
-                    else {
-                        
-                        compteur = 0;
-                        indice = i+1;
-         
-                    }
-                    if(compteur == maxSplitY){
-                        
-                        pasDePlace=false;
-                        break;
-                        
-                        
-                        
-                    }
                     
+                    if(pasDePlaceY == false) compteurX++;
+                    else{
+                        
+                        compteurX=0;
+                        indiceX = i+1;
+                        
+                    }
+                    if(compteurX == maxSplitX) pasDePlace = false;
+                    i++;
+                    compteurY=0;
+                    pasDePlaceY=true;
+                    indiceY = 0;
+                                       
+                                       
+                                       
                 }
                 
-                compteur = 0;
+                compteurX = 0;
+                i=0;
+                k=0;
                 
                 if(pasDePlace==false){
                     
-                    for(int i = indice ; i < indice+maxSplitY ; i++){
+                    for(i = indiceX ; i < indiceX+maxSplitX ; i++){
                         
-                        compteur = 0;
-                        j=0;
-                        tailleRestante[i] = tailleRestante[i] - maxSplitX;
-                        do{
+                        for(j = indiceY ; j < indiceY+maxSplitY ; j++){
                             
-                            if(conteneur[j][i][1] == 0){
-
-                                if(compteur > maxSplitX) break;
-                                this.setID(j, i, id);
-                                compteur++;
+                            compteur = 0;
+                            tailleRestante[i][j] = tailleRestante[i][j] - maxSplitZ;
+                            do{
                                 
-                            }
-                            j++;
+                                if(i > this.getTailleX()-1 || j > this.getTailleY()-1 || k > this.getTailleZ()-1 ) break;
+                                else{
+                                    
+                                    
+                                    if(conteneur[i][j][k][1] == 0){
+                                    
+                                        if(compteur > maxSplitZ) break;
+                                        this.setID(i, j, k, id);
+                                        compteur++;
+                                    
+                                    }
+                                    k++;
+                                    System.out.println("i : "+i+" j : "+j+" k : "+k);
+                                    System.out.println("compteur : "+compteur+" maxSplitZ : "+maxSplitZ);
+                                }
+                            }while(compteur != maxSplitZ);
                             
-                        }while(compteur != maxSplitX);
+                            System.out.println("on sort");
+                            System.out.println("id : "+id);
+                        }                                              
                         
                     }
                     
                     id++;
                     
+                    System.out.println("maxX : "+maxSplitX+" maxY : "+maxSplitY+" maxZ : "+maxSplitZ);
+                    
                 } else {
                     
-                    if (maxSplitX == 1 && maxSplitY == 1) break;
-                    if(maxSplitY == 1){
+                    boolean xPlusGrand;
+                    boolean yPlusGrand;
+                    boolean zPlusGrand;
+                    
+                    xPlusGrand = yPlusGrand = zPlusGrand = false;
+                                                           
+                    if(maxSplitZ > maxSplitX && maxSplitZ > maxSplitY) zPlusGrand = true;
+                    if(maxSplitY > maxSplitX && maxSplitY > maxSplitZ) yPlusGrand = true;
+                    if(maxSplitX > maxSplitY && maxSplitX > maxSplitZ) xPlusGrand = true;
+                    
+                    System.out.println("maxSplitX : "+xPlusGrand+" maxSplitY : "+yPlusGrand+" maxSplitZ : "+zPlusGrand);
+                    
+                    if(zPlusGrand == true) maxSplitZ--;
+                    else if(yPlusGrand == true) maxSplitY--;
+                    else if(xPlusGrand == true) maxSplitX--;
+                    else {
                         
-                        maxSplitY = maxSplitYOrig;
-                        maxSplitX--;
+                        if(maxSplitZ < maxSplitX && maxSplitZ < maxSplitY) maxSplitY--;
+                        else maxSplitZ--;
                         
-                    } else maxSplitY--;
+                    }
                     
                 }
                 
-            } while(maxSplitX > 0 || maxSplitY > 0);
+            } while(maxSplitX > 0 || maxSplitY > 0 || maxSplitZ > 0);
             
             return id;
             

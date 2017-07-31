@@ -10,9 +10,6 @@ import java.util.*;
  *
  * @author remy.fischer
  */
-
-//Binpacking resolution algorithm project
-
 public class BinPacking {
         
 
@@ -22,7 +19,25 @@ public class BinPacking {
     public static void main(String[] args) {
         // TODO code application logic here
         
+        TabItem tabItemTest = new TabItem();
+        tabItemTest.randomize(10,3,3,3);
         
+        Conteneur avionTest = new Conteneur(5,5,5);
+        
+        avionTest.init();
+        
+        int maxDimItemX = tabItemTest.getPlusGrandeDimensionX();
+        int maxDimItemY = tabItemTest.getPlusGrandeDimensionY();
+        int maxDimItemZ = tabItemTest.getPlusGrandeDimensionZ();
+        
+        System.out.println("maxDimX = "+ maxDimItemX + " maxDimY = "+maxDimItemY+" maxDimZ = "+maxDimItemZ);
+        
+        int nbSousConteneur = avionTest.split(maxDimItemX, maxDimItemY, maxDimItemZ);
+        
+        avionTest.afficherID();
+        
+        
+        /*
         
         Scanner sc = new Scanner(System.in);
 
@@ -74,7 +89,11 @@ public class BinPacking {
         
         testOptimisationAlgorithmeTri(tabItemTest, avionTest, nbSousConteneur);
         
+        */
+
     }
+    
+    /*
     
     // fonction permettant de lancer les deux algorithmes de tri et de retenir le plus optimisé    
     public static void testOptimisationAlgorithmeTri(TabItem _tabItem, Conteneur _conteneur, int _nbSousconteneur){
@@ -110,13 +129,20 @@ public class BinPacking {
         }
         
         
+        
+    
     }
+
+    */
     
     // algorithme en firstfit
     // firstfit : vérifie si l'item rentre, si il rentre on le place dans le conteneur, si il ne rentre pas on passe à l'item suivant
     // et ainsi de suite jusqu'à avoir essayé de placer tous les item
     
     // Pour ce faire, on vérifie si un item rentre dans un sous conteneur, si il trouve un sous conteneur dans lequel il rentre
+    
+    /*
+    
     public static double firstFit(TabItem _tabItem, Conteneur _conteneur, int _nbSousConteneur){
         
         int compteurX;
@@ -244,5 +270,7 @@ public class BinPacking {
         return remplissage;
         
     }
+
+    */
     
 }

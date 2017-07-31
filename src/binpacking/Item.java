@@ -18,6 +18,7 @@ public class Item {
     
     private int tailleX;
     private int tailleY;
+    private int tailleZ;
     private static final AtomicInteger ID_FACTORY = new AtomicInteger();
     private final int id;
     
@@ -25,14 +26,16 @@ public class Item {
         
         tailleX = 0;
         tailleY = 0;
+        tailleZ = 0;
         id = ID_FACTORY.getAndIncrement();
         
     }
     
-    public Item(int _x, int _y){
+    public Item(int _x, int _y, int _z){
         
         tailleX = _x;
         tailleY = _y;
+        tailleZ = _z;
         id = ID_FACTORY.getAndIncrement();
         
     }
@@ -46,6 +49,12 @@ public class Item {
     public int getTailleY(){
         
         return tailleY;
+        
+    }
+    
+    public int getTailleZ(){
+        
+        return tailleZ;
         
     }
     
@@ -64,6 +73,12 @@ public class Item {
     public void setTailleY(int _y){
         
         tailleY = _y;
+        
+    }
+    
+    public void setTailleZ(int _z){
+        
+        tailleZ = _z;
         
     }
     

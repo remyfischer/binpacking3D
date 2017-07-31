@@ -59,6 +59,7 @@ public class TabItem {
         int nbItemAAjouter;
         int tailleXItem;
         int tailleYItem;
+        int tailleZItem;
         
         System.out.println("Combien d'item souhaitez vous ajouter ?");
         nbItemAAjouter = sc.nextInt();
@@ -69,7 +70,9 @@ public class TabItem {
             tailleXItem = sc.nextInt();
             System.out.println("Saisissez une taille Y pour votre item");
             tailleYItem = sc.nextInt();
-            tabItem.add(new Item(tailleXItem, tailleYItem));
+            System.out.println("Saisissez une taille Z pour votre item");
+            tailleZItem = sc.nextInt();
+            tabItem.add(new Item(tailleXItem, tailleYItem, tailleZItem));
             nbItem++;
         }
         
@@ -81,7 +84,7 @@ public class TabItem {
         
         for(int i = 0 ; i < nbItem ; i++){
             
-            System.out.println("Taille item " + i + " : " + (tabItem.get(i)).getTailleX()+" ; "+(tabItem.get(i)).getTailleY());
+            System.out.println("Taille item " + i + " : " + (tabItem.get(i)).getTailleX()+" ; "+(tabItem.get(i)).getTailleY()+" ; "+(tabItem.get(i).getTailleZ()));
         
         }
         
@@ -138,6 +141,83 @@ public class TabItem {
         
     }
     
+    public int getPlusGrandeDimensionZ(){
+        
+        int maxZ = -1;
+        
+        for(int i=0 ; i < nbItem ; i++){
+            
+            if(tabItem.get(i).getTailleZ() > maxZ){
+                
+                maxZ = tabItem.get(i).getTailleZ();
+                
+            }
+            
+        }
+        
+        return maxZ;
+        
+    }
+    
+    // fonction permettant de remplir avec des items aléatoires le tableau d'item
+    public void randomize(){
+        
+        Scanner sc = new Scanner(System.in);
+        int nbItemAAjouter;
+        int xMax, yMax, zMax;
+        
+        System.out.println("Combien d'item voulez vous créer ?");
+        nbItemAAjouter = sc.nextInt();
+        System.out.println("Donnez la dimension x maximale");
+        xMax = sc.nextInt();
+        System.out.println("Donnez la dimension y maximale");
+        yMax = sc.nextInt();
+        System.out.println("Donnez la dimension z maximale");
+        zMax = sc.nextInt();
+        
+        int x,y,z;
+        Item[] item = new Item[nbItemAAjouter];
+        
+        for(int i = 0 ; i < nbItemAAjouter ; i++){
+            
+            x = (int)((Math.random() * xMax)+1);
+            y = (int)((Math.random() * yMax)+1);
+            z = (int)((Math.random() * zMax)+1);
+            
+            item[i] = new Item(x, y, z);
+            
+            this.AjoutItem(item[i]);
+            
+        }
+        
+        this.afficherContenu();
+        
+        
+        
+    }
+    
+    public void randomize(int _nbItemAAjouter, int _xMax, int _yMax, int _zMax){
+        
+        int x,y,z;
+        Item[] item = new Item[_nbItemAAjouter];
+        
+        for(int i = 0 ; i < _nbItemAAjouter ; i++){
+            
+            x = (int)((Math.random() * _xMax)+1);
+            y = (int)((Math.random() * _yMax)+1);
+            z = (int)((Math.random() * _zMax)+1);
+            
+            item[i] = new Item(x, y, z);
+            
+            this.AjoutItem(item[i]);
+            
+        }
+        
+        this.afficherContenu();       
+        
+        
+    }
+    
     // fonction permettant de trier les items par ordre décroissant de surface
     // on utilise la méthode du tri par selection
     
@@ -149,15 +229,15 @@ public class TabItem {
         while (i < this.getNbItem() - 1 ){
             
             k = i;
-            max = this.getItem(k).getTailleX() * this.getItem(k).getTailleY();
+            max = this.getItem(k).getTailleX() * this.getItem(k).getTailleY() * this.getItem(k).getTailleZ();
             _max = this.getItem(k);
             j=i+1;
             while(j <= this.getNbItem() -1){
                 
-                if(this.getItem(j).getTailleX() * this.getItem(j).getTailleY() > max){
+                if(this.getItem(j).getTailleX() * this.getItem(j).getTailleY() * this.getItem(j).getTailleZ() > max){
                     
                     k = j;
-                    max = this.getItem(k).getTailleX() * this.getItem(k).getTailleY();
+                    max = this.getItem(k).getTailleX() * this.getItem(k).getTailleY() * this.getItem(k).getTailleZ();
                     _max = this.getItem(k);
                     
                 }
